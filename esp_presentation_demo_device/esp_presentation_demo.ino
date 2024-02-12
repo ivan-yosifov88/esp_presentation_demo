@@ -3,20 +3,11 @@
 #include <PubSubClient.h>
 #include <ArduinoJson.h>
 
-// Office network
-// const char* ssid = "TP-Link_059";
-// const char* password = "Q#W1234erTasd";
-
-// Phone network
-// const char* ssid = "Redmi Note 12 Pro 5G";
-// const char* password = "njzws66kxri2vv2";
-
 // Home network
-const char* ssid = "Rila4";
-const char* password = "0884801468";
+const char* ssid = "";
+const char* password = "";
 
-// const char* mqtt_server = "192.168.0.139";
-const char* mqtt_server = "18.196.81.119"; 
+const char* mqtt_server = "";
 const char* mqtt_username = "esp8266";
 const char* mqtt_password = "mqtt_very666Secret_p@ss"; 
 
