@@ -5,6 +5,9 @@ This repository contains the code and documentation for an IoT project using the
 
 >**Before you start: first clone this repository to your server!**
 
+## Device photo
+<img src="esp_presentation_demo.jpg" width="200" alt="Device Photo" title="ESP8266 IoT Project Device"/>
+
 ## Hardware Requirements
 
 - ESP8266 ESP-12E module
@@ -25,7 +28,7 @@ This repository contains the code and documentation for an IoT project using the
 
 ### Uploading Firmware to ESP8266
 
-1. The `ino` code for the project can be found here: [https://github.com/ivan-yosifov88/esp_presentation_demo/blob/main/esp_presentation_demo_device/esp_presentation_demo.ino link](#). Follow the steps in the Arduino IDE guide above to upload the firmware to your ESP8266 module.
+1. The `ino` code for the project can be found here: [ino.code](https://github.com/ivan-yosifov88/esp_presentation_demo/blob/main/esp_presentation_demo_device/esp_presentation_demo.ino).. Follow the steps in the Arduino IDE guide above to upload the firmware to your ESP8266 module.
 *You have to adjust only the public server address and the ssid and pass to the Wi-Fi network* 
 ## Cloud Setup
 
