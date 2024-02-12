@@ -1,0 +1,13 @@
+[Unit]
+Description=Flask instance to serve esp_presentation_demo
+After=network.target
+
+[Service]
+User=root
+Group=www-data
+WorkingDirectory=/home/ubuntu/esp_presentation_demo
+Environment="FLASK_APP=app.py"
+ExecStart=/usr/bin/python3 -m flask run --host=0.0.0.0
+
+[Install]
+WantedBy=multi-user.target

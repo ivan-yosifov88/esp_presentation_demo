@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Device Control Panel</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            height: 100vh;
+            background-color: #f0f0f0;
+        }
+
+        .container {
+            text-align: center;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            background-color: #fff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        button {
+            padding: 10px 20px;
+            margin: 5px;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .green {
+            background-color: #4CAF50;
+        }
+
+        .yellow {
+            background-color: #FFEB3B;
+            color: black;
+        }
+
+        /* Adjust text color for visibility */
+        .red {
+            background-color: #F44336;
+        }
+
+        .animate {
+            background-color: #2196F3;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>ESP8266 Device Control Panel</h1>
+    <div>
+        <h2>Temperature: <span id="tempValue">-</span>°C</h2>
+        <h2>Humidity: <span id="humidityValue">-</span>%</h2>
+        <h2>Potentiometer: <span id="potValue">-</span></h2>
+    </div>
+    <div>
+        <button class="green" onclick="controlLED('green', 'toggle')">Green LED</button>
+        <button class="yellow" onclick="controlLED('yellow', 'toggle')">Yellow LED</button>
+        <button class="red" onclick="controlLED('red', 'toggle')">Red LED</button>
+        <button class="animate" onclick="animateLEDs()">Animate LEDs</button>
+    </div>
+</div>
+<script>
+    function controlLED(color, state) {
+        fetch('/control/led', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({color: color, state: state})
+        }).then(response => response.json()).then(data => console.log(data));
+    }
+
+    function animateLEDs() {
+        fetch('/control/animate', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({})
+        }).then(response => response.json()).then(data => console.log(data));
+    }
+
+    function updateStates() {
+        fetch('/get-state')
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('potValue').textContent = data.potentiometer;
+                document.getElementById('tempValue').textContent = data.temperature;
+                document.getElementById('humidityValue').textContent = data.humidity;
+                updateButtonState('green', data.green);
+                updateButtonState('yellow', data.yellow);
+                updateButtonState('red', data.red);
+            })
+            .catch(error => console.error('Error fetching states:', error));
+    }
+
+    function updateButtonState(color, state) {
+        const button = document.querySelector(`.${color}`);
+        if (state) {
+            button.textContent = `${color.charAt(0).toUpperCase() + color.slice(1)} LED (OFF)`;
+            button.style.opacity = '0.5';  // LED is OFF, show the button as disabled
+        } else {
+            button.textContent = `${color.charAt(0).toUpperCase() + color.slice(1)} LED (ON)`;
+            button.style.opacity = '1.0';  // LED is ON
+
+        }
+    }
+
+    setInterval(updateStates, 3000)
+</script>
+</body>
+</html>
